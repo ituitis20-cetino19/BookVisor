@@ -1,22 +1,32 @@
    
 var express = require('express');
-var path = require('path');
+
+const mysql = require('mysql2/promise');
 
 
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');     
+let db = null; 
+const app = express(); 
+app.use(express.json);
 
-var weatherAPIRouter = require('./routes/weather');
+app.get('/get-user', async(req,res,next)=> {
+    const name = req.body.name;
+    
+    await db.query("Insert into users (names)",[name]);
 
-var app = express();
+    res.json(status:"OK"); 
+    next();  
+});
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public-flutter')));
 
-app.use('/api/weather', weatherAPIRouter);
-
-module.exports = app;
+async function main(){
+    db = await mysql.createConnection({
+        host : "localhost", 
+        user : "root",
+        password: "",
+        database: "flutter_nodejs",
+        timezone: ,
+        charset: , 
+    });
+    app.listen(8000);
+}
+main();

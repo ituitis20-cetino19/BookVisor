@@ -1,55 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'http.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController nameController = TextEditingController();
+  String response = "";
+  getUser() async {
+    // gets the user name and email when pressed on the sign up button
+    var result = await http_get("get-user", {
+      "name": nameController.text,
+    });
+    if (result.ok) {
+      response = result.data['status'];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children : <Widget> [
+        children: <Widget>[
           Container(
-            decoration : BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
-                end : Alignment.bottomCenter,
-                colors : [
+                end: Alignment.bottomCenter,
+                colors: [
                   Color(0xFFFFA726),
                   Color(0xFFFF9800),
                   Color(0xFFF57C00),
                   Color(0xFFE65100),
                 ],
-                stops : [0.1,0.4,0.7,0.9],
+                stops: [0.1, 0.4, 0.7, 0.9],
               ),
             ),
           ),
           Container(
-            height : double.infinity,
-            child : SingleChildScrollView(
+            height: double.infinity,
+            child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
-              padding : EdgeInsets.symmetric(
-                horizontal : 40.0 ,
-                vertical : 120.0,
+              padding: EdgeInsets.symmetric(
+                horizontal: 40.0,
+                vertical: 120.0,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children : <Widget> [
+                children: <Widget>[
                   Text(
                     'Sign In',
                     style: TextStyle(
-                      color :  Colors.black,
+                      color: Colors.black,
                       fontFamily: 'OpenSans',
-                      fontSize : 20.0,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 30.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget> [
+                    children: <Widget>[
                       Text(
                         'Email',
                       ),
@@ -57,31 +71,30 @@ class _LoginPageState extends State<LoginPage> {
                       Material(
                         color: Color(0xFFFFA726),
                         elevation: 20.0,
-                        child : Container(
+                        child: Container(
                           alignment: Alignment.centerLeft,
-                          height : 50.0,
+                          height: 50.0,
                           child: TextField(
                             keyboardType: TextInputType.emailAddress,
-                            style : TextStyle(color: Colors.white),
-                            decoration : InputDecoration(
-                              border : InputBorder.none,
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
                               contentPadding: EdgeInsets.only(top: 20.0),
-                              prefixIcon : Icon(
+                              prefixIcon: Icon(
                                 Icons.email,
-                                color : Colors.white,
+                                color: Colors.white,
                               ),
                               hintText: 'Enter Your Email',
                             ),
                           ),
                         ),
                       ),
-
                     ],
                   ),
                   SizedBox(height: 30.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget> [
+                    children: <Widget>[
                       Text(
                         'Password',
                       ),
@@ -89,37 +102,32 @@ class _LoginPageState extends State<LoginPage> {
                       Material(
                         color: Color(0xFFF57C00),
                         elevation: 10.0,
-                        child : Container(
+                        child: Container(
                           alignment: Alignment.centerLeft,
-                          height : 50.0,
+                          height: 50.0,
                           child: TextField(
                             obscureText: true,
                             keyboardType: TextInputType.emailAddress,
-                            style : TextStyle(color: Colors.white),
-                            decoration : InputDecoration(
-                              border : InputBorder.none,
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
                               contentPadding: EdgeInsets.only(top: 20.0),
-                              prefixIcon : Icon(
+                              prefixIcon: Icon(
                                 Icons.lock,
-                                color : Colors.white,
+                                color: Colors.white,
                               ),
                               hintText: 'Enter Your Password',
                             ),
                           ),
                         ),
                       ),
-
                     ],
                   ),
                   Container(
                     alignment: Alignment.centerRight,
-                    child : FlatButton(
-                      onPressed: () {
-
-                      },
-                      child : Text(
-                          'Forgot Password?'
-                      ),
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Text('Forgot Password?'),
                     ),
                   ),
                   SizedBox(height: 10.0),
@@ -130,42 +138,30 @@ class _LoginPageState extends State<LoginPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child : Text(
-                          'LOGIN'
-                      ),
+                      child: Text('LOGIN'),
                       onPressed: () {
-
+                        getUser(); // MAKES REQUEST
                       },
                     ),
                   ),
                   SizedBox(height: 30.0),
-                  Container(
-                      child: Text(
-                          'OR'
-                      )
-                  ),
+                  Container(child: Text('OR')),
                   SizedBox(height: 30.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget> [
-
+                    children: <Widget>[
                       GestureDetector(
-
-                        onTap: () {
-
-
-                        },
+                        onTap: () {},
                         child: Container(
-
                           height: 60.0,
                           width: 60.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color : Colors.white,
+                            color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color : Colors.black,
-                                offset : Offset(0,2),
+                                color: Colors.black,
+                                offset: Offset(0, 2),
                                 blurRadius: 6.0,
                               ),
                             ],
@@ -176,24 +172,18 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-
                       GestureDetector(
-
-                        onTap: () {
-
-
-                        },
+                        onTap: () {},
                         child: Container(
-
                           height: 60.0,
                           width: 60.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color : Colors.white,
+                            color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color : Colors.black,
-                                offset : Offset(0,2),
+                                color: Colors.black,
+                                offset: Offset(0, 2),
                                 blurRadius: 6.0,
                               ),
                             ],
@@ -204,37 +194,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-
-
-
-
-
                     ],
-
-
                   ),
-
                 ],
               ),
-
             ),
           ),
-
         ],
-
       ),
-
-
-
     );
-
-
-
-
-
-
   }
-
-
 }
-
