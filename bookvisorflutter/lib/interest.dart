@@ -16,7 +16,7 @@ class interest extends StatelessWidget {
                   onTap: () {},
                   child: Container(
                     height: 60.0,
-                    width: 60.0,
+                    width: 50.0,
                     child: Image.asset(
                         "assets/left.svg"), // could not add it , it does not show up .
                   ),
