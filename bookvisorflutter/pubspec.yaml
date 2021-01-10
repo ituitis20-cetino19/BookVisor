@@ -52,6 +52,7 @@ flutter:
     - assets/facebook.png
     - assets/booksvg.jpg
     - assets/open-book.png
+    - assets/left.svg
   #   - images/a_dot_burr.jpeg
    #  - images/a_dot_ham.jpeg
 
